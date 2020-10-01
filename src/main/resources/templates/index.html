@@ -148,10 +148,17 @@
                                                 <button class="btn" type="submit"><i class="material-icons">search</i></button>
                                             </form>
                                         </div>
-
+                                        <div th:if="${ver}" >
+                                            <!--<p th:text="${tipo}" id="tipot"></p>-->
+                                            <p id="verse" th:text="${nome}"></p>
+                                        </div>
                                         <div th:if="${verdade}" >
                                             <!--<p th:text="${tipo}" id="tipot"></p>-->
                                             <p id="alerta" th:text="${nome}"></p>
+                                        </div>
+                                        <div th:if="${rs}" >
+                                            <!--<p th:text="${tipo}" id="tipot"></p>-->
+                                            <p id="reserve" th:text="${nome}"></p>
                                         </div>
                                         <!--                                        <div th:if="${grav}" >
                                                                                     <p th:text="${tipo}" id="tipot"></p>
@@ -168,7 +175,7 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <form method="post" action="/" enctype="multipart/form-data" novalidate>
+                                            <form id="formulario" method="post" action="/" enctype="multipart/form-data" novalidate>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
@@ -180,7 +187,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="designacao">Designação</label>
+                                                            <label for="designacao">Nome da Empresa</label>
                                                             <input disabled id="designacao" name="denominacao" type="text" class="form-control" >
                                                         </div>
 
@@ -221,6 +228,8 @@
                                                                 <option selected="">Selecione a actividade</option>
                                                                 <option>Venda de Material de Construção</option>
                                                                 <option>Venda de alimentos</option>
+                                                                <option>Desenvolvimento de Sistemas</option>
+                                                                <option>Venda de Cosméticos</option>
                                                             </select>
                                                         </div>
 
@@ -357,23 +366,35 @@
     <script>
             $(document).ready(function () {
                 $("#alerta").hide();
+                $("#verse").hide();
+                $("#reserve").hide();
                 $("#btnReserva").prop("disabled", true);
 //                if ($("#tipot").text() == "Ver") {
-                if ($("#alerta").length) {
-                    $("#designacao").val($("#alerta").text());
+                if ($("#reserve").length) {
                     var element = $(this);
                     var type = 'success';
-                    var message = 'O nome está disponível!';
-                    $("#btnReserva").prop("disabled", false);
-                    var title = 'Verificação';
+                    var message = 'O nome foi reservado com sucesso';
+                    var title = 'Reserva';
                     toastr[type](message, title);
                 }
-                if ($("#alerta").length === 0) {
-                    var element = $(this);
-                    var type = 'warning';
-                    var message = 'O nome não está disponível!';
-                    var title = 'Verificação';
-                    toastr[type](message, title);
+                if ($("#verse").length) {
+                    if ($("#alerta").length) {
+                        $("#designacao").val($("#alerta").text());
+                        var element = $(this);
+                        var type = 'success';
+                        var message = 'O nome está disponível!';
+                        $("#btnReserva").prop("disabled", false);
+                        var title = 'Verificação';
+                        toastr[type](message, title);
+                    }
+                    if ($("#alerta").length === 0) {
+                        $("#designacao").prop("disabled", true);
+                        var element = $(this);
+                        var type = 'warning';
+                        var message = 'O nome não está disponível!';
+                        var title = 'Verificação';
+                        toastr[type](message, title);
+                    }
                 }
 //                }
 //                if ($("#tipot").text() == "Reserva") {
@@ -414,6 +435,10 @@
                     }
                 })
                         .trigger("change");
+                $("#btnReserva").click(function () {
+                    $("#designacao").prop("disabled", false);
+                    $("#formulario").submit();
+                });
             });
     </script>
 </body>

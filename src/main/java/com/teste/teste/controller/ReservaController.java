@@ -35,6 +35,7 @@ public class ReservaController {
         boolean grav = true;
         rr.save(reserva);
         mv.addObject("grav", grav);
+        mv.addObject("rs", true);
         mv.addObject("tipo", "Reserva");
         mv.addObject("verdade", false);
         return mv;
@@ -53,6 +54,7 @@ public class ReservaController {
         }
         mv.addObject("verdade", verdade);
         mv.addObject("nome", nome);
+        mv.addObject("ver", true);
         mv.addObject("tipo", "Ver");
         return mv;
     }
