@@ -28,6 +28,10 @@ public class ReservaController {
     public String iniciar() {
         return "index";
     }
+    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    public String inicia() {
+        return "form";
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ModelAndView registar(Reserva reserva, String socios, MultipartFile[] ficheiros) {

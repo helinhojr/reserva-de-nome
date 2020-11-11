@@ -270,7 +270,7 @@
                                                         </div>
                                                         <div class="form-group mb-5">
                                                             <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" checked="" class="custom-control-input" id="terms" />
+                                                                <input type="checkbox" class="custom-control-input" id="terms" />
                                                                 <label class="custom-control-label" for="terms">Aceito os  <a href="#">Termos e Condições</a></label>
                                                             </div>
                                                         </div>
@@ -435,9 +435,14 @@
                     }
                 })
                         .trigger("change");
-                $("#btnReserva").click(function () {
-                    $("#designacao").prop("disabled", false);
-                    $("#formulario").submit();
+                $("#btnReserva").click(function (e) {
+                    if ($("#terms").prop("checked") == false) {
+                       alert('Deve concordar com os termos primeiro!');
+                        e.preventDefault();
+                    } else {
+                        $("#designacao").prop("disabled", false);
+                        $("#formulario").submit();
+                    }
                 });
             });
     </script>
